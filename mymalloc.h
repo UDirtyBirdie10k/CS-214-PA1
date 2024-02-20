@@ -12,4 +12,14 @@
 void *mymalloc(unsigned int size, char *FILE, int LINE);
 void myfree(void *z, char *FILE, int LINE);
 
+// helper functions
+unsigned short using(unsigned char*);
+unsigned short Width_Byte(unsigned char*);
+unsigned short partSize(unsigned char*);
+unsigned short SIZE(unsigned short size);
+void setChunk(unsigned char* mem_Part, unsigned short using, unsigned short size);
+void removeChunk(unsigned char* mem_Part);
+void show_MEM();
+void merge();
+
 #endif
