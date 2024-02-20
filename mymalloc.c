@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static double memory[MEMLENGTH];
+static double curr_Part[MEMLENGTH];
 //**GUIDE**\\
 // 1.) Create a loop that goes throught the chunk of memory access its components and display them and find the index that memory is allocated up to
 
