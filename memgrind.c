@@ -78,14 +78,14 @@ void run3(){
 
             if (choice == 0 && allocatedObjects < numObjects) {
 
-                array[allocatedObjects++] = (char*)malloc(1);
-
+                array[allocatedObjects] = (char*)malloc(1);
+                allocatedObjects++;
             } 
             else if (allocatedObjects > 0) {
 
-                free(array[--allocatedObjects]);
-                
-            }
+                free(array[allocatedObjects]);
+                --allocatedObjects;
+            }   
         }
         for(int j = 0; j < allocatedObjects; j++){
 
@@ -93,11 +93,13 @@ void run3(){
 
         }
 
+        for(int i = 0; i < numIterations; i++){
+            free(array[i]);
+        }
+
         gettimeofday(&timeEnd, NULL);
         timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
 
     }
-
-
 
 }
