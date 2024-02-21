@@ -39,11 +39,6 @@ void show_MEM()
     }
 }
 
-/// @brief
-/// @param size
-/// @param FILE
-/// @param LINE
-/// @return
 void *mymalloc(unsigned int size, char *FILE, int LINE)
 {
 
@@ -126,27 +121,28 @@ void myfree(void *z, char *FILE, int LINE)
             }
             else
             {
-                if (mem_Part + 1 + Width_Byte(mem_Part) == pointer && removed == 0)
+                if (mem_Part + 1 + Width_Byte(mem_Part) == pointer && removed == 0)     // check to see if the memory at the pointer has already been deallocated
                 {
-                    printf("RedundantFree Error: Unable to deallocate memory which has already been deallocated %d, %s\n", line, file);
+                    printf("RedundantFree Error: Unable to deallocate memory which has already been deallocated %d, %s\n", line, file);     // message for redundant free
                     removed = 1;
                     break;
                 }
-                if (prevFree != NULL)
+                if (prevFree != NULL) // if the prev piece of memory is NULL that means you can merge the prev chunk with the chunk after that was just deallocated
                 {
 
                     //
-                    int newSize = partSize(prevFree) + partSize(mem_Part);
+                    int newSize = partSize(prevFree) + partSize(mem_Part); // create the size of the merged chunks of memory if applicable
                     setChunk(prevFree, 0, newSize);
                 }
                 i += partSize(mem_Part);
             }
+            // go through the loop again to see if this is the first empty chunk of memory
             if (prevFree == NULL)
             {
                 prevFree = mem_Part;
             }
         }
-        else
+        else            // <--- there is data in the chunks
         {
             if (mem_Part + 1 + Width_Byte(mem_Part) == pointer)
             {
@@ -154,26 +150,27 @@ void myfree(void *z, char *FILE, int LINE)
                 {
                     removeChunk(mem_Part);
                 }
-                removed = 1;
+                removed = 1;  // flag
             }
             else
             {
-                prevFree = NULL;
+                prevFree = NULL;        // reset the pointer for prevFree
 
                 i += partSize(mem_Part);
             }
         }
     }
-    if (removed == 0)
+    if (removed == 0)       // pointer flag to show that no data was was removed from the pointer b/c of error with pointer
     {
         printf("Deallocation Error: Unable to deallocate with invalid pointer in line %d, %s\n", line, file)
     }
 }
+    // checks to see if the chunk is in use by checking the start of the chunk
 unsigned short using(unsigned char *mem_Part)
 {
     return *mem_Part & 1;
 }
-
+    // points to the start of the part of the chunk to find the chunk size of allocation (bytes)
 unsigned short chunkSize(unsigned char *mem_Part)
 {
     unsigned short byteLength = Width_Byte(mem_Part);
