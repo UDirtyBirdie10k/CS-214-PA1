@@ -170,7 +170,12 @@ unsigned short using(unsigned char *mem_Part)
 {
     return *mem_Part & 1;
 }
-    // points to the start of the part of the chunk to find the chunk size of allocation (bytes)
+
+    // check to see if chunk is in use and show byte size of allocation
+unsigned short Width_Byte(unsigned char* mem_Part) {
+    return (*mem_Part >> 1) & 1;
+}
+    // 
 unsigned short chunkSize(unsigned char *mem_Part)
 {
     unsigned short byteLength = Width_Byte(mem_Part);
