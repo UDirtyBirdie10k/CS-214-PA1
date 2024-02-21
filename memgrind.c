@@ -6,7 +6,7 @@
 #define numIterations 50
 #define numObjects 120
 
-
+//Malloc 120 items and then free right after
 void run1(){
 
     struct timeval timeStart, timeEnd;
@@ -29,6 +29,7 @@ void run1(){
     timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
 
 }
+//Malloc 120 1 byte items and then put it in an array then free it after. 
 
 void run2(){
 
