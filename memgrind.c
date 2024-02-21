@@ -7,14 +7,14 @@
 #define numObjects 120
 
 //Malloc 120 items and then free right after
-long run1(){
+double run1(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
 
-    for(int i = 0; i < numIterations; i++){
+    gettimeofday(&timeStart, NULL);
 
-        gettimeofday(&timeStart, NULL);
+    for(int i = 0; i < numIterations; i++){
         
         for(int j = 0; j < 120; j++){
 
@@ -32,15 +32,16 @@ long run1(){
 }
 //Malloc 120 1 byte items and then put it in an array then free it after. 
 
-long run2(){
+double run2(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
     char* array[120];
+    
+    gettimeofday(&timeStart, NULL);
 
     for(int i = 0; i < numIterations; i++){
 
-        gettimeofday(&timeStart, NULL);
         
         for(int j = 0; j < 120; j++){
 
@@ -53,27 +54,25 @@ long run2(){
 
         }
 
-        gettimeofday(&timeEnd, NULL);
-        timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
-        return (timeTotal);
-
     }
+    gettimeofday(&timeEnd, NULL);
+    timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+    return (timeTotal);
 
 }
 
 //Randomly malloc and add 1 byte pointer to array or freeing a pointer until array is empty. 
 
-long run3(){
+double run3(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
     char* array[120];
     int allocatedObjects = 0;
 
+    gettimeofday(&timeStart, NULL);
 
     for(int i = 0; i < numIterations; i++){
-
-        gettimeofday(&timeStart, NULL);
         
         for(int j = 0; j < 120; j++){
             
@@ -96,26 +95,26 @@ long run3(){
 
         }
 
-
-        gettimeofday(&timeEnd, NULL);
-        timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
-        return (timeTotal);
-
     }
+    gettimeofday(&timeEnd, NULL);
+    timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+    return (timeTotal);
 
 }
+
 //Malloc 120 1 byte pointers and free them backwards. 
 
-long run4(){
+double run4(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
     char* array[120];
     int allocatedObjects = 0;
 
-    for(int i = 0; i < numIterations; i++){
+    gettimeofday(&timeStart, NULL);
 
-        gettimeofday(&timeStart, NULL);
+
+    for(int i = 0; i < numIterations; i++){
         
         for(int j = 0; j < 120; j++){
             
@@ -127,17 +126,16 @@ long run4(){
             free(array[i]);
         }
 
-        gettimeofday(&timeEnd, NULL);
-        timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
-        return (timeTotal);
-
     }
+    gettimeofday(&timeEnd, NULL);
+    timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+    return (timeTotal);
 
 }
 
 //Choosing a randomlySized malloc of size 1 - 65 or freeing a pointer
 
-long run5(){
+double run5(){
     
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -146,8 +144,10 @@ long run5(){
     char* array[numObjects];
     int allocatedObjects = 0;
 
+    gettimeofday(&timeStart, NULL);
+
+
     for (int i = 0; i < numIterations; i++) {
-        gettimeofday(&timeStart, NULL);
 
         while (allocatedObjects < numObjects) {
             int choice = rand() % 2;
