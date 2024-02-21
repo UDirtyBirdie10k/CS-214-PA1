@@ -6,8 +6,8 @@
 #define numIterations 50
 #define numObjects 120
 
-
-void run1(){
+//Malloc 120 items and then free right after
+long run1(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -27,10 +27,12 @@ void run1(){
 
     }
     timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+    return (timeTotal);
 
 }
+//Malloc 120 1 byte items and then put it in an array then free it after. 
 
-void run2(){
+long run2(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -53,16 +55,15 @@ void run2(){
 
         gettimeofday(&timeEnd, NULL);
         timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+        return (timeTotal);
 
     }
-
-
 
 }
 
 //Randomly malloc and add 1 byte pointer to array or freeing a pointer until array is empty. 
 
-void run3(){
+long run3(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -98,13 +99,14 @@ void run3(){
 
         gettimeofday(&timeEnd, NULL);
         timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+        return (timeTotal);
 
     }
 
 }
 //Malloc 120 1 byte pointers and free them backwards. 
 
-void run4(){
+long run4(){
 
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -127,15 +129,15 @@ void run4(){
 
         gettimeofday(&timeEnd, NULL);
         timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+        return (timeTotal);
 
     }
-
 
 }
 
 //Choosing a randomlySized malloc of size 1 - 65 or freeing a pointer
 
-void run5(){
+long run5(){
     
     struct timeval timeStart, timeEnd;
     double timeTotal = 0.0;
@@ -167,6 +169,8 @@ void run5(){
         totalFrees = 0;
 
         gettimeofday(&timeEnd, NULL);
+        timeTotal += timeEnd.tv_usec - timeStart.tv_usec;
+        return (timeTotal);
 
     }
 }

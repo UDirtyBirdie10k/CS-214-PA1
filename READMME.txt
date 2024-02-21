@@ -1,0 +1,24 @@
+William Tran 
+NetID = wht12
+
+Mark Jakubowski
+NetID = 
+
+Memgrind Test:
+
+Test 1 was a requirement in the write up where we had to allocate a 1 byte object then free
+it right after, 120 times. 
+
+Test 2 was a requirement in the write up where we had to allocate 120 1 byte objects and 
+store them in an array and when are all stored we would then deallocate them from the start.
+
+Test 3 was a requirement in the write up where we had to use random choice and if it was
+0 we would allocate the object and add it to the array. If it was 1 then we would deallocate 
+the last item we added in the array. Until we allocate 120 times.
+
+Test 4 was one we created where we allocated all 120 1 byte objects but instead of freeing 
+it from the start of the array, we began from the end of the array.
+
+Test 5 was one we created which was similar to test 4, but this time choose the malloc to 
+be of size 1 byte or 65 byte. So if it was 0 it would malloc an object of size random and 
+if it was 1 it would free the previous object. 
