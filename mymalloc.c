@@ -175,9 +175,10 @@ unsigned short using(unsigned char *mem_Part)
 unsigned short Width_Byte(unsigned char* mem_Part) {
     return (*mem_Part >> 1) & 1;
 }
-    // 
+    // get the chunk size from the chunk that the pointer is currently on
 unsigned short chunkSize(unsigned char *mem_Part)
 {
+    // find the size of the meta data
     unsigned short byteLength = Width_Byte(mem_Part);
     if (byteLength == 0)
     {
@@ -188,6 +189,7 @@ unsigned short chunkSize(unsigned char *mem_Part)
         return (*(unsigned short *)mem_Part) >> 2;
     }
 }
+    // find the real integer size of memroy being used
 unsigned short realSize(unsigned short size)
 {
     if (size < 64)
@@ -198,7 +200,7 @@ unsigned short realSize(unsigned short size)
     {
         return size - 2;
     }
-}
+}   // gives the chunk the memory size
 void setChunk(unsigned char *mem_Part, unsigned short using, unsigned short size)
 {
     if (size < 64)
@@ -210,6 +212,7 @@ void setChunk(unsigned char *mem_Part, unsigned short using, unsigned short size
         *((short *)mem_Part) = (size << 2) + using + 2;
     }
 }
+    // labels a chunk that is not in use as empty
 void removeChunk(unsigned char *mem_Part)
 {
     setChunk(mem_Part, 0, partSize(mem_Part));
