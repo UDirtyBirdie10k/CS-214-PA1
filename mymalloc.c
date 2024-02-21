@@ -25,7 +25,7 @@ void show_MEM()
         unsigned char *mem_Part = (unsigned char *)&curr_Part[i];
 
         // retrieve information about the current piece of memory
-        printf("Index: %d, Address: %d, Bytes: %d, Size: %d\n", i, mem_Part, using(mem_Part), Width_Byte(mem_Part) + 1, partSize(mem_Part));
+        printf("Index: %d, Address: %hhn, Use: %d, Bytes: %d, Size: %d\n", i, mem_Part, using(mem_Part), Width_Byte(mem_Part) + 1, partSize(mem_Part));
 
         // measure the amount of chunks in memory that currently have allocation
         if (partSize(mem_Part) > 0 || using(mem_Part))
@@ -34,15 +34,15 @@ void show_MEM()
         }
         else
         {
-            i = MEMLENGTH
-        } // sets the allocated chunks' index to the length in memory needed
+            i = MEMLENGTH;
+     // sets the allocated chunks' index to the length in memory needed
     }
 }
 
 void *mymalloc(unsigned int size, char *FILE, int LINE)
 {
 
-    unsigned int allocSize = size + 1;
+    unsigned short allocSize = size + 1;
     if (allocSize >= 64)
     {
         allocSize++; //<---- if allocSize >= 64 it is a two byte piece of data
@@ -69,14 +69,11 @@ void *mymalloc(unsigned int size, char *FILE, int LINE)
                     setChunk(mem_Part + allocSize, 0, 0);       // set next to 0
                     return mem_Part + Width_Byte(mem_Part) + 1; // return the chunk
                 }
-                else
-                {
                     break; // if no memory available leave the loop
-                }
             }
             else
             {
-                if (allocSize <= SIZE && allocSize > 0) // check to see if u can fit any bytes in the open block selected
+                if (allocSize <= Size && allocSize > 0) // check to see if u can fit any bytes in the open block selected
                 {
                     setChunk(mem_Part, 1, allocSize); // set memory address of current chunk without using the entire chunk if leftover bits
                     if (Size - allocSize > 0)
@@ -87,15 +84,14 @@ void *mymalloc(unsigned int size, char *FILE, int LINE)
                 }
             }
         }
-        i += Size(mem_Part); // if no return we are still iterating
+        i += SIZE(*mem_Part); // if no return we are still iterating
     }
-    printf("OutOfMemory Error: Allocating more memory is unavailable %d, %s\n", line, file); // Data and loop break check
+    printf("OutOfMemory Error: Allocating more memory is unavailable %d, %s\n", LINE, FILE); // Data and loop break check
     return NULL;
 }
 
-void myfree(void *z, char *FILE, int LINE)
+void myfree(void *pointer, char *file, int line)
 {
-
     if (pointer == NULL) // check to see if pointer is NULL
     {
         return;
@@ -146,7 +142,7 @@ void myfree(void *z, char *FILE, int LINE)
         {
             if (mem_Part + 1 + Width_Byte(mem_Part) == pointer)
             {
-                if (realSize(partSize(mem_Part)) != 0)
+                if (SIZE(partSize(mem_Part)) != 0)
                 {
                     removeChunk(mem_Part);
                 }
@@ -162,7 +158,7 @@ void myfree(void *z, char *FILE, int LINE)
     }
     if (removed == 0) // pointer flag to show that no data was was removed from the pointer b/c of error with pointer
     {
-        printf("Deallocation Error: Unable to deallocate with invalid pointer in line %d, %s\n", line, file)
+        printf("Deallocation Error: Unable to deallocate with invalid pointer in line %d, %s\n", line, file);
     }
 }
 // checks to see if the chunk is in use by checking the start of the chunk
@@ -191,7 +187,7 @@ unsigned short chunkSize(unsigned char *mem_Part)
     }
 }
 // find the real integer size of memroy being used
-unsigned short realSize(unsigned short size)
+unsigned short SIZE(unsigned short size)
 {
     if (size < 64)
     {
@@ -217,4 +213,5 @@ void setChunk(unsigned char *mem_Part, unsigned short using, unsigned short size
 void removeChunk(unsigned char *mem_Part)
 {
     setChunk(mem_Part, 0, partSize(mem_Part));
+}
 }
