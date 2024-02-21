@@ -121,9 +121,9 @@ void myfree(void *z, char *FILE, int LINE)
             }
             else
             {
-                if (mem_Part + 1 + Width_Byte(mem_Part) == pointer && removed == 0)     // check to see if the memory at the pointer has already been deallocated
+                if (mem_Part + 1 + Width_Byte(mem_Part) == pointer && removed == 0) // check to see if the memory at the pointer has already been deallocated
                 {
-                    printf("RedundantFree Error: Unable to deallocate memory which has already been deallocated %d, %s\n", line, file);     // message for redundant free
+                    printf("RedundantFree Error: Unable to deallocate memory which has already been deallocated %d, %s\n", line, file); // message for redundant free
                     removed = 1;
                     break;
                 }
@@ -142,7 +142,7 @@ void myfree(void *z, char *FILE, int LINE)
                 prevFree = mem_Part;
             }
         }
-        else            // <--- there is data in the chunks
+        else // <--- there is data in the chunks
         {
             if (mem_Part + 1 + Width_Byte(mem_Part) == pointer)
             {
@@ -150,32 +150,33 @@ void myfree(void *z, char *FILE, int LINE)
                 {
                     removeChunk(mem_Part);
                 }
-                removed = 1;  // flag
+                removed = 1; // flag
             }
             else
             {
-                prevFree = NULL;        // reset the pointer for prevFree
+                prevFree = NULL; // reset the pointer for prevFree
 
                 i += partSize(mem_Part);
             }
         }
     }
-    if (removed == 0)       // pointer flag to show that no data was was removed from the pointer b/c of error with pointer
+    if (removed == 0) // pointer flag to show that no data was was removed from the pointer b/c of error with pointer
     {
         printf("Deallocation Error: Unable to deallocate with invalid pointer in line %d, %s\n", line, file)
     }
 }
-    // checks to see if the chunk is in use by checking the start of the chunk
+// checks to see if the chunk is in use by checking the start of the chunk
 unsigned short using(unsigned char *mem_Part)
 {
     return *mem_Part & 1;
 }
 
-    // check to see if chunk is in use and show byte size of allocation
-unsigned short Width_Byte(unsigned char* mem_Part) {
+// check to see if chunk is in use and show byte size of allocation
+unsigned short Width_Byte(unsigned char *mem_Part)
+{
     return (*mem_Part >> 1) & 1;
 }
-    // get the chunk size from the chunk that the pointer is currently on
+// get the chunk size from the chunk that the pointer is currently on
 unsigned short chunkSize(unsigned char *mem_Part)
 {
     // find the size of the meta data
@@ -189,7 +190,7 @@ unsigned short chunkSize(unsigned char *mem_Part)
         return (*(unsigned short *)mem_Part) >> 2;
     }
 }
-    // find the real integer size of memroy being used
+// find the real integer size of memroy being used
 unsigned short realSize(unsigned short size)
 {
     if (size < 64)
@@ -200,7 +201,7 @@ unsigned short realSize(unsigned short size)
     {
         return size - 2;
     }
-}   // gives the chunk the memory size
+} // gives the chunk the memory size
 void setChunk(unsigned char *mem_Part, unsigned short using, unsigned short size)
 {
     if (size < 64)
@@ -212,7 +213,7 @@ void setChunk(unsigned char *mem_Part, unsigned short using, unsigned short size
         *((short *)mem_Part) = (size << 2) + using + 2;
     }
 }
-    // labels a chunk that is not in use as empty
+// labels a chunk that is not in use as empty
 void removeChunk(unsigned char *mem_Part)
 {
     setChunk(mem_Part, 0, partSize(mem_Part));

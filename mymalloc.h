@@ -17,6 +17,5 @@ unsigned short SIZE(unsigned short size);
 void setChunk(unsigned char* mem_Part, unsigned short using, unsigned short size);
 void removeChunk(unsigned char* mem_Part);
 void show_MEM();
-void merge();
 
 #endif
